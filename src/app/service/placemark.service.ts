@@ -38,7 +38,14 @@ export class PlacemarkService {
   }
 
   findByTitle(title: any) {
-    return this.httpClient.get(`${URL}?title=${title}`);
+    return this.httpClient.get<PlacemarkModel>(`${URL}?title=${title}`);
+  }
+
+  getIdByTitle(title: any) {
+    const res = this.findByTitle(title);
+    res.subscribe(item => {
+      return item.id;
+    });
   }
 
 }

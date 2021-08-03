@@ -3,11 +3,9 @@ export class PlacemarkModel {
   title?: string
   latitude?: number
   longitude?: number
-  color: string = "#000";
-  constructor(title: string, latitude: number, longitude: number, color: string) {
+  constructor(title: string, latitude: number, longitude: number) {
     this.title = title;
     this.latitude = latitude;
     this.longitude = longitude;
-    this.color = color;
   }
 }
