@@ -1,5 +1,5 @@
 export class PlacemarkModel {
-  id?: any
+  id: any
   title?: string
   latitude?: number
   longitude?: number

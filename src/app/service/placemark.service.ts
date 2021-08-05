@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {PlacemarkModel} from "../models/placemark.model";
 import {Observable} from "rxjs";
 
@@ -21,8 +21,13 @@ export class PlacemarkService {
     return this.httpClient.get<PlacemarkModel>(`${URL}${id}`);
   }
 
-  create(data: any): Observable<any> {
-    return this.httpClient.post<PlacemarkModel>(URL, data);
+  create(data: any): Observable<PlacemarkModel> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.httpClient.post<PlacemarkModel>(URL, data, httpOptions);
   }
 
   update(id: any, data: any): Observable<any> {
@@ -30,7 +35,7 @@ export class PlacemarkService {
   }
 
   remove(id: any): Observable<PlacemarkModel> {
-    return this.httpClient.delete<PlacemarkModel>(`${URL}/${id}`);
+    return this.httpClient.delete<PlacemarkModel>(`${URL}${id}`);
   }
 
   removeAll(): Observable<any> {
@@ -38,14 +43,7 @@ export class PlacemarkService {
   }
 
   findByTitle(title: any) {
-    return this.httpClient.get<PlacemarkModel>(`${URL}?title=${title}`);
-  }
-
-  getIdByTitle(title: any) {
-    const res = this.findByTitle(title);
-    res.subscribe(item => {
-      return item.id;
-    });
+    return this.httpClient.get<PlacemarkModel[]>(`${URL}?title=${title}`);
   }
 
 }
