@@ -35,9 +35,10 @@ export class PlacemarkListComponent implements OnInit, OnDestroy {
     let latitude: number = coords[0].toPrecision(6);
     let longitude: number = coords[1].toPrecision(6);
     let title = this.URL_FETCH + id.toString();
-    console.log("index = ", id);
     const mPlacemark = new PlacemarkModel(title, latitude, longitude);
     this.service.create(mPlacemark).subscribe(() => {
+      this.list();
+      console.log(this.placemarks);
       return this.placemarks;
     });
     this.index++;
@@ -47,10 +48,16 @@ export class PlacemarkListComponent implements OnInit, OnDestroy {
     const placemark = event.target as ymaps.Placemark;
     const title = placemark.properties.get('iconContent') as unknown as string;
     const findPlacemark = this.service.findByTitle(title);
-    findPlacemark.subscribe(item => this.service.remove(item[0].id).subscribe(() => {
-        return this.placemarks;
-      }
-    ));
+    findPlacemark.subscribe(
+      item => open(this.URL_FETCH + item[0].id)
+    );
+    /*findPlacemark.subscribe(item => this.service.remove(item[0].id).
+    subscribe(() => {
+      this.list();
+      console.log(this.placemarks);
+      return this.placemarks;
+    }
+    ));*/
   }
 
   getPlacemarks() {
