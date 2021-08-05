@@ -49,15 +49,12 @@ export class PlacemarkListComponent implements OnInit, OnDestroy {
     const title = placemark.properties.get('iconContent') as unknown as string;
     const findPlacemark = this.service.findByTitle(title);
     findPlacemark.subscribe(
-      item => open(this.URL_FETCH + item[0].id)
+      item => {
+        open(this.URL_FETCH + item[0].id);
+        this.list();
+        return this.placemarks;
+      }
     );
-    /*findPlacemark.subscribe(item => this.service.remove(item[0].id).
-    subscribe(() => {
-      this.list();
-      console.log(this.placemarks);
-      return this.placemarks;
-    }
-    ));*/
   }
 
   getPlacemarks() {
