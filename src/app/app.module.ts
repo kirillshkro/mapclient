@@ -11,6 +11,7 @@ import localeRu from '@angular/common/locales/ru';
 import localeRuExtra from '@angular/common/locales/extra/ru';
 import {PlacemarkListComponent} from './components/placemark-list/placemark-list.component';
 import {AngularYandexMapsModule, YA_CONFIG} from "angular8-yandex-maps";
+import {PlacemarkPhotoModel} from './models/placemark-photo/placemark-photo.model';
 
 registerLocaleData(localeRu, 'ru', localeRuExtra);
 
@@ -18,6 +19,7 @@ registerLocaleData(localeRu, 'ru', localeRuExtra);
   declarations: [
     AppComponent,
     PlacemarkListComponent,
+    PlacemarkPhotoModel,
   ],
   imports: [
     BrowserModule,
