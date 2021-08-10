@@ -1,16 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {PlacemarkModel} from "../placemark.model";
 
-@Component({
-  selector: 'app-placemark-photo',
-  templateUrl: './placemark-photo.model.html',
-  styleUrls: ['./placemark-photo.model.css']
-})
-export class PlacemarkPhotoModel implements OnInit {
+export class PlacemarkPhotoModel extends PlacemarkModel {
+  photoUri?: string;
 
-  constructor() {
+  constructor(title: string, latitude: number, longitude: number, photoUri?: string) {
+    super(title, latitude, longitude);
+    this.photoUri = photoUri;
   }
-
-  ngOnInit(): void {
-  }
-
 }
+

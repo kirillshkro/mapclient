@@ -1,0 +1,11 @@
+<div class="container">
+  <ya-map [center]="[55.76, 37.60]" [zoom]="12" (yaclick)="addPlacemark($event)"></ya-map>
+  <div *ngFor="let item of getPlacemarks()">
+    <ya-placemark [geometry]="[item.latitude, item.longitude]" , [properties]="{
+    hintContent: item.title}"
+                  [options]="{
+    iconLayout: 'default#image',
+    iconImageHref: item.photoUri
+    }"></ya-placemark>
+  </div>
+</div>
