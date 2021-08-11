@@ -30,7 +30,7 @@ export class PlacemarkListComponent implements OnInit, OnDestroy {
   private readonly URL_FETCH = "http://localhost:8000/placemarks/";
 
   addPlacemark(event: YaEvent) {
-    let id = Math.round(Math.random() * 10000);
+    let id = this.placemarks.length + 1;
     const coords = event.event.get('coords');
     let latitude: number = coords[0].toPrecision(6);
     let longitude: number = coords[1].toPrecision(6);
@@ -50,9 +50,12 @@ export class PlacemarkListComponent implements OnInit, OnDestroy {
     const findPlacemark = this.service.findByTitle(title);
     findPlacemark.subscribe(
       item => {
-        open(this.URL_FETCH + item[0].id);
-        this.list();
-        return this.placemarks;
+        this.service.remove(item[0].id).subscribe(
+          () => {
+            this.list();
+            return this.placemarks;
+          },
+          error => console.error(error));
       }
     );
   }
@@ -67,8 +70,17 @@ export class PlacemarkListComponent implements OnInit, OnDestroy {
         this.placemarks = data;
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     )
+  }
+
+  showPlacemark(event: YaEvent) {
+    const placemark = event.target as ymaps.Placemark;
+    const title = placemark.properties.get('iconContent') as unknown as string;
+    const findPlacemark = this.service.findByTitle(title);
+    findPlacemark.subscribe(
+      () => placemark.options.set('balloonCloseButton', 'false')
+    );
   }
 }

@@ -2,8 +2,10 @@
 <ya-map [center]="[55.76, 37.60]" [zoom]="12" (yaclick)="addPlacemark($event)">
   <div *ngFor="let item of getPlacemarks()">
     <ya-placemark [geometry]="[item.latitude, item.longitude]" [properties]="{
-      iconContent: item.title
-    }" (yacontextmenu)="removePlacemark($event)">
+    iconContent: item.title,
+    balloonContent: item.title
+    }" (yacontextmenu)="removePlacemark($event)"
+                  (yamouseenter)="showPlacemark($event)">
     </ya-placemark>
   </div>
 </ya-map>
