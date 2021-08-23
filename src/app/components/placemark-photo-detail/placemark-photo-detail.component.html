@@ -1,1 +1,5 @@
-<p>placemark-photo-detail works!</p>
+<form>
+  <div class="content" *ngIf="getPlacemark()">
+    <label>{{getPlacemark().title}}</label>
+  </div>
+</form>

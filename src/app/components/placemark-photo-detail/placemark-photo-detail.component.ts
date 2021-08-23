@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {PlacemarkPhotoModel} from "../../models/placemark-photo/placemark-photo.model";
 
 @Component({
   selector: 'app-placemark-photo-detail',
@@ -7,10 +8,13 @@ import {Component, OnInit} from '@angular/core';
 })
 export class PlacemarkPhotoDetailComponent implements OnInit {
 
-  constructor() {
+  constructor(private placemark: PlacemarkPhotoModel) {
   }
 
   ngOnInit(): void {
   }
 
+  getPlacemark() {
+    return this.placemark;
+  }
 }

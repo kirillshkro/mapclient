@@ -30,8 +30,6 @@ export class PlacemarkListComponent implements OnInit, OnDestroy {
   addPlacemark(event: YaEvent) {
     const lastIndex = this.placemarks.length;
     const id = this.placemarks[lastIndex - 1].id + 1;
-    console.log("last id = ", this.placemarks[this.placemarks.length - 1].id);
-    console.log("id = ", id);
     const coords = event.event.get('coords');
     let latitude: number = coords[0].toPrecision(6);
     let longitude: number = coords[1].toPrecision(6);

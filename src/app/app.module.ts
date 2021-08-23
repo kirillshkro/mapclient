@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {PlacemarkService} from "./service/placemark.service";
 
@@ -13,6 +13,13 @@ import {PlacemarkListComponent} from './components/placemark-list/placemark-list
 import {AngularYandexMapsModule, YA_CONFIG} from "angular8-yandex-maps";
 import {PlacemarkPhotoListComponent} from './components/placemark-photo-list/placemark-photo-list.component';
 import {PlacemarkPhotoDetailComponent} from './components/placemark-photo-detail/placemark-photo-detail.component';
+import {RouterModule, Routes} from "@angular/router";
+
+const routes: Routes = [
+  {path: '', redirectTo: 'photos', pathMatch: 'full'},
+  {path: 'photos', component: PlacemarkPhotoListComponent},
+  {path: 'photos/{id}', component: PlacemarkPhotoDetailComponent}
+]
 
 registerLocaleData(localeRu, 'ru', localeRuExtra);
 
@@ -26,8 +33,10 @@ registerLocaleData(localeRu, 'ru', localeRuExtra);
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
-    AngularYandexMapsModule
+    AngularYandexMapsModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [
     PlacemarkService,
