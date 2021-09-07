@@ -1,42 +1,46 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PlacemarkPhotoService} from "../../service/placemark-photo.service";
-import {Subscription} from "rxjs";
 import {PlacemarkPhotoModel} from "../../models/placemark-photo/placemark-photo.model";
 import {YaEvent} from "angular8-yandex-maps";
-import {v4} from "uuid";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-placemark-photo-list',
   templateUrl: './placemark-photo-list.component.html',
   styleUrls: ['./placemark-photo-list.component.css']
 })
-export class PlacemarkPhotoListComponent implements OnInit, OnDestroy {
+export class PlacemarkPhotoListComponent implements OnInit {
 
   placemarks: PlacemarkPhotoModel[];
-  sub?: Subscription;
 
-  constructor(private service: PlacemarkPhotoService) {
+  constructor(private service: PlacemarkPhotoService, private router: Router) {
     this.placemarks = [];
   }
 
   ngOnInit(): void {
-    this.sub = this.service.getAll().subscribe(placemarks => this.placemarks = placemarks);
-  }
-
-  ngOnDestroy() {
-    this.sub?.unsubscribe();
+    this.list();
   }
 
   getPlacemarks() {
+    console.log(this.placemarks);
     return this.placemarks;
   }
 
   addPlacemark(event: YaEvent) {
     const coords = event.event.get('coords');
-    const latitude = coords[0];
-    const longitude = coords[1];
-    const title = v4().toString();
-    const mPlacemark = new PlacemarkPhotoModel(title, latitude, longitude);
-    this.service.create(JSON.stringify(mPlacemark));
+    const latitude = coords[0].toPrecision(6) as number;
+    const longitude = coords[1].toPrecision(6) as number;
+    this.router.navigate(['add'], {queryParams: {lat: latitude, long: longitude}}).then(result => {
+      console.log(result);
+    });
+    return this.placemarks;
+  }
+
+  private list(): void {
+    this.service.getAll().subscribe((placemarks) => this.placemarks = placemarks);
+  }
+
+  showPlacemark(event: YaEvent) {
+
   }
 }

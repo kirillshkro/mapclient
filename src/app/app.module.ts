@@ -4,21 +4,22 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import {PlacemarkService} from "./service/placemark.service";
 
 import {registerLocaleData} from "@angular/common";
 import localeRu from '@angular/common/locales/ru';
 import localeRuExtra from '@angular/common/locales/extra/ru';
-import {PlacemarkListComponent} from './components/placemark-list/placemark-list.component';
 import {AngularYandexMapsModule, YA_CONFIG} from "angular8-yandex-maps";
 import {PlacemarkPhotoListComponent} from './components/placemark-photo-list/placemark-photo-list.component';
 import {PlacemarkPhotoDetailComponent} from './components/placemark-photo-detail/placemark-photo-detail.component';
 import {RouterModule, Routes} from "@angular/router";
+import {AddPlacemarkPhotoComponent} from './components/add-placemark-photo/add-placemark-photo.component';
+import {PlacemarkPhotoService} from "./service/placemark-photo.service";
 
 const routes: Routes = [
   {path: '', redirectTo: 'photos', pathMatch: 'full'},
   {path: 'photos', component: PlacemarkPhotoListComponent},
-  {path: 'photos/{id}', component: PlacemarkPhotoDetailComponent}
+  {path: 'photos/:id', component: PlacemarkPhotoDetailComponent},
+  {path: 'add', component: AddPlacemarkPhotoComponent}
 ]
 
 registerLocaleData(localeRu, 'ru', localeRuExtra);
@@ -26,9 +27,9 @@ registerLocaleData(localeRu, 'ru', localeRuExtra);
 @NgModule({
   declarations: [
     AppComponent,
-    PlacemarkListComponent,
     PlacemarkPhotoListComponent,
     PlacemarkPhotoDetailComponent,
+    AddPlacemarkPhotoComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +40,7 @@ registerLocaleData(localeRu, 'ru', localeRuExtra);
     RouterModule.forRoot(routes)
   ],
   providers: [
-    PlacemarkService,
+    PlacemarkPhotoService,
     {
       provide: YA_CONFIG,
       useValue: {

@@ -1,5 +1,26 @@
-<form>
-  <div class="content" *ngIf="getPlacemark()">
-    <label>{{getPlacemark().title}}</label>
+<div *ngIf="placemarkDetail.id" class="edit-form">
+  <div class="container-yamap">
+    <ya-map [center]="[placemarkDetail.latitude, placemarkDetail.longitude]"></ya-map>
   </div>
-</form>
+  <form>
+    <div class="form-group">
+      <label for="title">Описание</label>
+      <input type="text"
+             id="title"
+             class="form-control"
+             required name="title"
+             [(ngModel)]="placemarkDetail.title"/>
+    </div>
+    <div class="form-group">
+      <label for="latitude">Широта</label>
+      <input type="text"
+             class="form-control"
+             id="latitude">
+    </div>
+    <div class="form-group">
+      <label><strong>Фото</strong></label>
+      <img src="{{placemarkDetail.image}}" alt="Изображение объекта"/>
+    </div>
+  </form>
+  <button class="badge badge-danger mr-2" (click)="deletePlacemark()">Удалить объект с карты</button>
+</div>

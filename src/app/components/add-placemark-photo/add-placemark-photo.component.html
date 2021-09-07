@@ -1,0 +1,41 @@
+<div class="form-control">
+  <form>
+    <label>Координаты</label>
+    <div class="list-group">
+      <div class="list-group-item">
+        <label for="latitude">Широта</label>
+        <input [(ngModel)]="placemark.latitude"
+               id="latitude"
+               name="latitude" type="text"/>
+      </div>
+      <div class="list-group-item">
+        <label for="longitude">Долгота</label>
+        <input [(ngModel)]="placemark.longitude"
+               id="longitude"
+               name="longitude"
+               type="text"/>
+      </div>
+    </div>
+    <div class="list-group">
+      <div class="list-group-item">
+        <label for="title">Описание объекта</label>
+        <input [(ngModel)]="placemark.title"
+               id="title"
+               type="text"
+               required name="title"/>
+      </div>
+      <div class="list-group">
+        <div class="list-group-item">
+          <label for="photo">Фото объекта</label>
+        </div>
+        <div class="list-group-item">
+          <input type="file"
+                 id="photo"
+                 name="photo"
+                 (change)="loadFile($event)"/>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="btn btn-success" (click)="savePlace()">Добавить объект</button>
+  </form>
+</div>

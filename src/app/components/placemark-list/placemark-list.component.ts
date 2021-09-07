@@ -1,24 +1,18 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PlacemarkService} from "../../service/placemark.service";
 import {PlacemarkModel} from "../../models/placemark.model";
 import {YaEvent} from "angular8-yandex-maps";
-import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-placemark-list',
   templateUrl: './placemark-list.component.html',
   styleUrls: ['./placemark-list.component.css']
 })
-export class PlacemarkListComponent implements OnInit, OnDestroy {
+export class PlacemarkListComponent implements OnInit {
   placemarks: PlacemarkModel[];
-  private sub?: Subscription;
 
   constructor(private service: PlacemarkService) {
     this.placemarks = [];
-  }
-
-  ngOnDestroy(): void {
-    this.sub?.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -35,7 +29,7 @@ export class PlacemarkListComponent implements OnInit, OnDestroy {
     let longitude: number = coords[1].toPrecision(6);
     let title = this.URL_FETCH + id.toString();
     const mPlacemark = new PlacemarkModel(title, latitude, longitude);
-    this.service.create(JSON.stringify(mPlacemark)).subscribe(() => {
+    this.service.create(mPlacemark).subscribe(() => {
       this.list();
       return this.placemarks;
     });
@@ -62,7 +56,7 @@ export class PlacemarkListComponent implements OnInit, OnDestroy {
   }
 
   list(): void {
-    this.sub = this.service.getAll().subscribe(
+    this.service.getAll().subscribe(
       data => {
         this.placemarks = data;
       },

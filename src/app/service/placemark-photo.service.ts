@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {PlacemarkPhotoModel} from "../models/placemark-photo/placemark-photo.model";
 
@@ -7,7 +7,7 @@ import {PlacemarkPhotoModel} from "../models/placemark-photo/placemark-photo.mod
   providedIn: 'root'
 })
 export class PlacemarkPhotoService {
-  private readonly URL = "http://localhost:8000/photos/";
+  private readonly URL = "http://localhost:8000/placemarks/";
 
   constructor(private http: HttpClient) {
   }
@@ -16,12 +16,12 @@ export class PlacemarkPhotoService {
     return this.http.get<PlacemarkPhotoModel[]>(`${this.URL}`);
   }
 
+  getById(id: any): Observable<PlacemarkPhotoModel> {
+    return this.http.get<PlacemarkPhotoModel>(`${this.URL}${id}`);
+  }
+
   create(data: any): Observable<PlacemarkPhotoModel> {
-    const headers = new HttpHeaders();
-    headers.set('Content-Type', 'application/json');
-    return this.http.post<PlacemarkPhotoModel>(`${this.URL}`, data, {
-      headers: headers
-    });
+    return this.http.post<PlacemarkPhotoModel>(`${this.URL}`, data);
   }
 
   update(data: any): Observable<PlacemarkPhotoModel> {

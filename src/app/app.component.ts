@@ -1,7 +1,4 @@
-import { Component } from '@angular/core';
-import {PlacemarkModel} from "./models/placemark.model";
-import {PlacemarkService} from "./service/placemark.service";
-import {YaReadyEvent} from "angular8-yandex-maps";
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +6,6 @@ import {YaReadyEvent} from "angular8-yandex-maps";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
+  constructor() {
+  }
 }
