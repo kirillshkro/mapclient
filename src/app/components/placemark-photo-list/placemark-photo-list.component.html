@@ -1,9 +1,13 @@
 <div class="container">
-  <ya-map [center]="[55.76, 37.60]" [zoom]="12" (yaclick)="addPlacemark($event)"></ya-map>
-  <div *ngFor="let item of getPlacemarks()">
-    <ya-placemark [geometry]="[item.latitude, item.longitude]" [properties]="{
-      hintContent: item.title
+  <ya-map [center]="[55.76, 37.60]" [zoom]="12" (yaclick)="addPlacemark($event)">
+    <ya-placemark *ngFor="let item of getPlacemarks()" [geometry]="[item.latitude, item.longitude]" [properties]="{
+      iconContent: item.title
     }">
     </ya-placemark>
+  </ya-map>
+  <div class="edit-form">
+    <form>
+
+    </form>
   </div>
 </div>
