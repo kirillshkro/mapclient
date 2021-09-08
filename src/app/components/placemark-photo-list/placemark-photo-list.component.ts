@@ -3,6 +3,7 @@ import {PlacemarkPhotoService} from "../../service/placemark-photo.service";
 import {PlacemarkPhotoModel} from "../../models/placemark-photo/placemark-photo.model";
 import {YaEvent} from "angular8-yandex-maps";
 import {Router} from "@angular/router";
+import {shareReplay, tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-placemark-photo-list',
@@ -12,6 +13,16 @@ import {Router} from "@angular/router";
 export class PlacemarkPhotoListComponent implements OnInit {
 
   placemarks: PlacemarkPhotoModel[];
+  placemarks$ = this.service.getAll().pipe(tap(data => this.placemarks = data));
+  currentPlacemark: PlacemarkPhotoModel = {
+    id: undefined,
+    title: '',
+    latitude: 0.0,
+    longitude: 0.0,
+    image: undefined,
+    width_photo: 0,
+    height_photo: 0
+  };
 
   constructor(private service: PlacemarkPhotoService, private router: Router) {
     this.placemarks = [];
@@ -19,11 +30,6 @@ export class PlacemarkPhotoListComponent implements OnInit {
 
   ngOnInit(): void {
     this.list();
-  }
-
-  getPlacemarks() {
-    console.log(this.placemarks);
-    return this.placemarks;
   }
 
   addPlacemark(event: YaEvent) {
@@ -37,10 +43,32 @@ export class PlacemarkPhotoListComponent implements OnInit {
   }
 
   private list(): void {
-    this.service.getAll().subscribe((placemarks) => this.placemarks = placemarks);
+    this.service.getAll().pipe(shareReplay(1));
   }
 
   showPlacemark(event: YaEvent) {
+    const placemark = (event.target as ymaps.Placemark);
+    const URL = "http://localhost:8000/placemarks/";
+    placemark.options.set('balloonCloseButton', 'false');
+    const title = placemark.properties.get('iconContent') as unknown as string;
+    const findPlacemark = this.service.findByTitle(title);
+    findPlacemark.subscribe(data => {
+      this.currentPlacemark = data[0];
+      const htmlText = `<a href="${URL}${this.currentPlacemark.id}/">${title}</a>`;
+      placemark.options.set('balloonCloseButton', 'false');
+      placemark.properties.set('balloonContent', htmlText);
+    });
+  }
 
+
+  deletePlacemark() {
+    this.service.remove(this.currentPlacemark.id).subscribe(
+      () => {
+      },
+      error => {
+        console.log(error)
+      },
+      () => this.service.getAll().subscribe(() => this.placemarks$ = this.service.getAll())
+    );
   }
 }

@@ -10,7 +10,6 @@ import localeRu from '@angular/common/locales/ru';
 import localeRuExtra from '@angular/common/locales/extra/ru';
 import {AngularYandexMapsModule, YA_CONFIG} from "angular8-yandex-maps";
 import {PlacemarkPhotoListComponent} from './components/placemark-photo-list/placemark-photo-list.component';
-import {PlacemarkPhotoDetailComponent} from './components/placemark-photo-detail/placemark-photo-detail.component';
 import {RouterModule, Routes} from "@angular/router";
 import {AddPlacemarkPhotoComponent} from './components/add-placemark-photo/add-placemark-photo.component';
 import {PlacemarkPhotoService} from "./service/placemark-photo.service";
@@ -18,7 +17,6 @@ import {PlacemarkPhotoService} from "./service/placemark-photo.service";
 const routes: Routes = [
   {path: '', redirectTo: 'photos', pathMatch: 'full'},
   {path: 'photos', component: PlacemarkPhotoListComponent},
-  {path: 'photos/:id', component: PlacemarkPhotoDetailComponent},
   {path: 'add', component: AddPlacemarkPhotoComponent}
 ]
 
@@ -28,7 +26,6 @@ registerLocaleData(localeRu, 'ru', localeRuExtra);
   declarations: [
     AppComponent,
     PlacemarkPhotoListComponent,
-    PlacemarkPhotoDetailComponent,
     AddPlacemarkPhotoComponent,
   ],
   imports: [

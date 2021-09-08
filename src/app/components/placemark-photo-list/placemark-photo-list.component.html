@@ -1,13 +1,47 @@
 <div class="container">
   <ya-map [center]="[55.76, 37.60]" [zoom]="12" (yaclick)="addPlacemark($event)">
-    <ya-placemark *ngFor="let item of getPlacemarks()" [geometry]="[item.latitude, item.longitude]" [properties]="{
+    <ya-placemark (yaclick)="showPlacemark($event)" *ngFor="let item of (placemarks$ | async)"
+                  [geometry]="[item.latitude, item.longitude]"
+                  [properties]="{
       iconContent: item.title
-    }">
+    }"> <!--[options]="{
+    iconLayout: 'default#image',
+    iconImageHref: item.image,
+    iconImageSize: [item.width_photo, item.height_photo],
+    iconImageOffset: [-item.width_photo, -item.height_photo]
+}"-->
+      }
     </ya-placemark>
   </ya-map>
-  <div class="edit-form">
+  <div class="edit-form" *ngIf="currentPlacemark.id">
     <form>
-
+      <div class="form-group">
+        <label for="title">Описание</label>
+        <input [(ngModel)]="currentPlacemark.title"
+               class="form-control"
+               id="title"
+               name="title" required
+               type="text"/>
+      </div>
+      <div class="form-group">
+        <label for="latitude">Широта</label>
+        <input class="form-control"
+               id="latitude"
+               type="text"
+               [value]="currentPlacemark.latitude"/>
+      </div>
+      <div class="form-group">
+        <label for="longitude">Долгота</label>
+        <input class="form-control"
+               id="longitude"
+               type="text"
+               [value]="currentPlacemark.longitude"/>
+      </div>
+      <div class="form-group">
+        <label><strong>Фото</strong></label>
+        <img alt="Изображение объекта" src="{{currentPlacemark.image}}" class="img-thumbnail-small"/>
+      </div>
+      <button (click)="deletePlacemark()" class="badge badge-danger mr-2">Удалить объект с карты</button>
     </form>
   </div>
 </div>

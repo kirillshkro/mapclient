@@ -15,7 +15,9 @@ export class AddPlacemarkPhotoComponent implements OnInit {
     title: '',
     latitude: 0,
     longitude: 0,
-    image: ''
+    image: '',
+    width_photo: 0,
+    height_photo: 0
   };
   formData = new FormData();
 
@@ -33,7 +35,9 @@ export class AddPlacemarkPhotoComponent implements OnInit {
       title: this.placemark.title,
       latitude: this.placemark.latitude,
       longitude: this.placemark.longitude,
-      image: this.placemark.image
+      image: this.placemark.image,
+      width_photo: this.placemark.width_photo,
+      height_photo: this.placemark.height_photo
     };
     this.service.create(data).subscribe((response) => {
         console.log(response);
