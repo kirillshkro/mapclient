@@ -30,7 +30,12 @@ export class PlacemarkPhotoListComponent implements OnInit {
 
   ngOnInit(): void {
     this.list();
+    console.log("ngOnInit");
   }
+
+  /*ngDoCheck(): void {
+    console.log("ngDoCheck");
+  }*/
 
   addPlacemark(event: YaEvent) {
     const coords = event.event.get('coords');

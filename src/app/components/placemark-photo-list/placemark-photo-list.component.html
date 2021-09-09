@@ -4,12 +4,13 @@
                   [geometry]="[item.latitude, item.longitude]"
                   [properties]="{
       iconContent: item.title
-    }"> <!--[options]="{
-    iconLayout: 'default#image',
+    }" [options]="{
+    iconLayout: 'default#imageWithContent',
     iconImageHref: item.image,
-    iconImageSize: [item.width_photo, item.height_photo],
-    iconImageOffset: [-item.width_photo, -item.height_photo]
-}"-->
+    iconImageSize: [48, 48],
+    iconImageOffset: [20, 20],
+    iconContentOffset: [30, 30]
+}">
       }
     </ya-placemark>
   </ya-map>
