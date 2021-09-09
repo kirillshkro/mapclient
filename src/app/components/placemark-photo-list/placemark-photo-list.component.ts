@@ -3,7 +3,7 @@ import {PlacemarkPhotoService} from "../../service/placemark-photo.service";
 import {PlacemarkPhotoModel} from "../../models/placemark-photo/placemark-photo.model";
 import {YaEvent} from "angular8-yandex-maps";
 import {Router} from "@angular/router";
-import {shareReplay, tap} from "rxjs/operators";
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-placemark-photo-list',
@@ -30,12 +30,7 @@ export class PlacemarkPhotoListComponent implements OnInit {
 
   ngOnInit(): void {
     this.list();
-    console.log("ngOnInit");
   }
-
-  /*ngDoCheck(): void {
-    console.log("ngDoCheck");
-  }*/
 
   addPlacemark(event: YaEvent) {
     const coords = event.event.get('coords');
@@ -48,7 +43,7 @@ export class PlacemarkPhotoListComponent implements OnInit {
   }
 
   private list(): void {
-    this.service.getAll().pipe(shareReplay(1));
+    this.placemarks$ = this.service.getAll().pipe(tap((data) => this.placemarks = data));
   }
 
   showPlacemark(event: YaEvent) {
@@ -73,7 +68,7 @@ export class PlacemarkPhotoListComponent implements OnInit {
       error => {
         console.log(error)
       },
-      () => this.service.getAll().subscribe(() => this.placemarks$ = this.service.getAll())
+      () => this.service.getAll().pipe(() => this.placemarks$ = this.service.getAll())
     );
   }
 }
