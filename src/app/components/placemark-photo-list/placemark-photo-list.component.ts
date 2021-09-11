@@ -58,6 +58,10 @@ export class PlacemarkPhotoListComponent implements OnInit {
       placemark.options.set('balloonCloseButton', 'false');
       placemark.properties.set('balloonContent', htmlText);
     });
+    const coords = event.event.get('coords');
+    const latitude = coords[0].toPrecision(6);
+    const longitude = coords[1].toPrecision(6);
+    alert([latitude, longitude]);
   }
 
 
