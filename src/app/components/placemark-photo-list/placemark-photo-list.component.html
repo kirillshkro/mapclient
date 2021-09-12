@@ -8,41 +8,10 @@
     iconLayout: 'default#imageWithContent',
     iconImageHref: item.image,
     iconImageSize: [48, 48],
-    iconImageOffset: [20, 20],
-    iconContentOffset: [30, 30]
+    iconImageOffset: [0, 0],
+    iconContentOffset: [0, 0]
 }">
       }
     </ya-placemark>
   </ya-map>
-  <div class="edit-form" *ngIf="currentPlacemark.id">
-    <form>
-      <div class="form-group">
-        <label for="title">Описание</label>
-        <input [(ngModel)]="currentPlacemark.title"
-               class="form-control"
-               id="title"
-               name="title" required
-               type="text"/>
-      </div>
-      <div class="form-group">
-        <label for="latitude">Широта</label>
-        <input class="form-control"
-               id="latitude"
-               type="text"
-               [value]="currentPlacemark.latitude"/>
-      </div>
-      <div class="form-group">
-        <label for="longitude">Долгота</label>
-        <input class="form-control"
-               id="longitude"
-               type="text"
-               [value]="currentPlacemark.longitude"/>
-      </div>
-      <div class="form-group">
-        <label><strong>Фото</strong></label>
-        <img alt="Изображение объекта" src="{{currentPlacemark.image}}" class="img-thumbnail-small"/>
-      </div>
-      <button (click)="deletePlacemark()" class="badge badge-danger mr-2">Удалить объект с карты</button>
-    </form>
-  </div>
 </div>

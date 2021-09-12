@@ -54,14 +54,12 @@ export class PlacemarkPhotoListComponent implements OnInit {
     const findPlacemark = this.service.findByTitle(title);
     findPlacemark.subscribe(data => {
       this.currentPlacemark = data[0];
-      const htmlText = `<a href="${URL}${this.currentPlacemark.id}/">${title}</a>`;
       placemark.options.set('balloonCloseButton', 'false');
-      placemark.properties.set('balloonContent', htmlText);
+      const hyperHtml = `<a href="${URL}${this.currentPlacemark.id}/">${title}</a>
+        <br>Широта: ${this.currentPlacemark.latitude}<br/>
+        Долгота: ${this.currentPlacemark.longitude}<br/><img src="${this.currentPlacemark.image}" alt="Картинка"/>`;
+      placemark.properties.set('balloonContent', hyperHtml);
     });
-    const coords = event.event.get('coords');
-    const latitude = coords[0].toPrecision(6);
-    const longitude = coords[1].toPrecision(6);
-    alert([latitude, longitude]);
   }
 
 
