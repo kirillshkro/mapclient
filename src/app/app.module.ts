@@ -13,11 +13,13 @@ import {PlacemarkPhotoListComponent} from './components/placemark-photo-list/pla
 import {RouterModule, Routes} from "@angular/router";
 import {AddPlacemarkPhotoComponent} from './components/add-placemark-photo/add-placemark-photo.component';
 import {PlacemarkPhotoService} from "./service/placemark-photo.service";
+import { PlaceDetailComponent } from './components/place-detail/place-detail.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'photos', pathMatch: 'full'},
   {path: 'photos', component: PlacemarkPhotoListComponent},
-  {path: 'add', component: AddPlacemarkPhotoComponent}
+  {path: 'add', component: AddPlacemarkPhotoComponent},
+  {path: 'photos/:id', component: PlaceDetailComponent}
 ]
 
 registerLocaleData(localeRu, 'ru', localeRuExtra);
@@ -27,6 +29,7 @@ registerLocaleData(localeRu, 'ru', localeRuExtra);
     AppComponent,
     PlacemarkPhotoListComponent,
     AddPlacemarkPhotoComponent,
+    PlaceDetailComponent,
   ],
   imports: [
     BrowserModule,

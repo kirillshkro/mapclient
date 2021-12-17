@@ -1,0 +1,42 @@
+<div class="form-group" *ngIf="currentPlacemark.id">
+  <form>
+    <div class="form-control">
+    <label for="title">Название метки</label>
+    </div>
+    <div class="form-control">
+    <input type="text"
+    id="title"
+    name="title"
+    [(ngModel)]="currentPlacemark.title"/>
+    </div>
+    <div class="form-control">
+      <label for="latitude">Широта:</label>
+    </div>
+    <div class="form-control">
+      <input type="text"
+      id="latitude"
+      name="latitude"
+      [(ngModel)]="currentPlacemark.latitude"/>
+    </div>
+    <div class="form-control">
+      <label for="longitude">Долгота:</label>
+    </div>
+    <div class="form-control">
+      <input type="text"
+      id="longitude"
+      name="longitude"
+      [(ngModel)]="currentPlacemark.longitude"/>
+    </div>
+    <div class="form-control">
+      <label for="latitude">Изображение:</label>
+    </div>
+    <div class="form-control">
+      <img [src]="currentPlacemark.image" alt="Фото" class="img-thumbnail-small"/>
+    </div>
+  </form>
+  <div class="form-group">
+    <div class="form-control">
+      <button (click)="deletePlacemark()">Удалить метку</button>
+    </div>
+  </div>
+</div>

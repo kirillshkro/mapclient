@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PlacemarkPhotoService} from "../../service/placemark-photo.service";
 import {PlacemarkPhotoModel} from "../../models/placemark-photo/placemark-photo.model";
 import {YaEvent} from "angular8-yandex-maps";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {tap} from "rxjs/operators";
 
 @Component({
@@ -24,7 +24,8 @@ export class PlacemarkPhotoListComponent implements OnInit {
     height_photo: 0
   };
 
-  constructor(private service: PlacemarkPhotoService, private router: Router) {
+  constructor(private service: PlacemarkPhotoService, private router: Router,
+              private route: ActivatedRoute) {
     this.placemarks = [];
   }
 
@@ -48,29 +49,20 @@ export class PlacemarkPhotoListComponent implements OnInit {
 
   showPlacemark(event: YaEvent) {
     const placemark = (event.target as ymaps.Placemark);
-    const URL = "http://localhost:8000/placemarks/";
+    const URL = "http://localhost:4200";
     placemark.options.set('balloonCloseButton', 'false');
     const title = placemark.properties.get('iconContent') as unknown as string;
     const findPlacemark = this.service.findByTitle(title);
-    findPlacemark.subscribe(data => {
+    findPlacemark.subscribe((data) => {
       this.currentPlacemark = data[0];
-      placemark.options.set('balloonCloseButton', 'false');
-      const hyperHtml = `<a href="${URL}${this.currentPlacemark.id}/">${title}</a>
+      this.router.navigate([`photos/${this.currentPlacemark.id}`], {
+          queryParams: {'placemarks': this.placemarks$, 'id': this.currentPlacemark.id}
+        }).then(resp => resp);
+    const hyperHtml = `<a href="${URL}${this.currentPlacemark.id}/">${title}</a>
         <br>Широта: ${this.currentPlacemark.latitude}<br/>
-        Долгота: ${this.currentPlacemark.longitude}<br/><img src="${this.currentPlacemark.image}" alt="Картинка"/>`;
+        Долгота: ${this.currentPlacemark.longitude}<br/><img src="${this.currentPlacemark.image}" alt="Картинка" style="height: 50%; width: 50%"/>`;
+      placemark.options.set('balloonCloseButton', 'false');
       placemark.properties.set('balloonContent', hyperHtml);
     });
-  }
-
-
-  deletePlacemark() {
-    this.service.remove(this.currentPlacemark.id).subscribe(
-      () => {
-      },
-      error => {
-        console.log(error)
-      },
-      () => this.service.getAll().pipe(() => this.placemarks$ = this.service.getAll())
-    );
   }
 }
